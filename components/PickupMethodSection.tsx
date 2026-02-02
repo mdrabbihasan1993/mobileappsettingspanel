@@ -135,159 +135,165 @@ export const PickupMethodSection: React.FC = () => {
   return (
     <>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-brand-dark">Pickup & Return Hubs</h2>
+        {/* Header styled like Bank Details Header */}
+        <div className="bg-white rounded-t-[24px] border-x border-t border-slate-100 p-5 bg-slate-50/50 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-[#1a3762] flex items-center gap-2">
+            <Truck size={18} className="text-brand-orange" />
+            Pickup & Return Hubs
+          </h2>
           <button 
             onClick={() => setShowAddForm(!showAddForm)}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl transition-all font-bold shadow-sm ${showAddForm ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-brand-dark text-white hover:bg-slate-800'}`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all font-bold text-[12px] shadow-sm ${showAddForm ? 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' : 'bg-brand-dark text-white hover:bg-slate-800'}`}
           >
-            {showAddForm ? <X size={18} /> : <Plus size={18} />}
-            {showAddForm ? 'Close Form' : 'Add New Address'}
+            {showAddForm ? <X size={14} /> : <Plus size={14} />}
+            {showAddForm ? 'Close' : 'Add Hub'}
           </button>
         </div>
 
-        {showAddForm && (
-          <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-2xl shadow-slate-200/50 animate-in zoom-in-95 duration-200 overflow-visible relative">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center text-brand-orange">
-                <MapPin size={22} />
-              </div>
-              <div>
-                <h3 className="font-bold text-brand-dark text-lg leading-tight">Add New Hub</h3>
-                <p className="text-xs text-slate-400 font-medium">Register a new store or pickup point</p>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="space-y-1">
-                  <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Store Name *</label>
-                  <input 
-                    type="text" 
-                    value={formData.storeName}
-                    onChange={(e) => setFormData({...formData, storeName: e.target.value})}
-                    className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold text-sm focus:ring-4 focus:ring-brand-orange/5 focus:border-brand-orange outline-none transition-all" 
-                    placeholder="e.g. Uttara Branch" 
-                  />
+        <div className="space-y-5">
+          {showAddForm && (
+            <div className="bg-white p-6 md:p-8 rounded-b-3xl border border-slate-200 shadow-2xl shadow-slate-200/50 animate-in zoom-in-95 duration-200 overflow-visible relative">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center text-brand-orange">
+                  <MapPin size={22} />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Phone Number *</label>
-                  <input 
-                    type="tel" 
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold text-sm focus:ring-4 focus:ring-brand-orange/5 focus:border-brand-orange outline-none transition-all" 
-                    placeholder="01XXX-XXXXXX" 
-                  />
+                <div>
+                  <h3 className="font-bold text-brand-dark text-lg leading-tight">Add New Hub</h3>
+                  <p className="text-xs text-slate-400 font-medium">Register a new store or pickup point</p>
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Detailed Address *</label>
-                <textarea 
-                  value={formData.address}
-                  onChange={(e) => setFormData({...formData, address: e.target.value})}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl h-20 text-slate-900 font-bold text-sm focus:ring-4 focus:ring-brand-orange/5 focus:border-brand-orange outline-none transition-all resize-none" 
-                  placeholder="House, Road, Block, Area description..."
-                ></textarea>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <SearchableDropdown 
-                  label="Division *" 
-                  placeholder="Search..." 
-                  options={DIVISIONS} 
-                  value={formData.division} 
-                  onChange={(val) => setFormData({ ...formData, division: val, district: '', area: '' })} 
-                />
-                
-                <SearchableDropdown 
-                  label="District *" 
-                  placeholder="Search..." 
-                  options={availableDistricts} 
-                  value={formData.district} 
-                  disabled={!formData.division}
-                  onChange={(val) => setFormData({ ...formData, district: val, area: '' })} 
-                />
-                
-                <SearchableDropdown 
-                  label="Area *" 
-                  placeholder="Search..." 
-                  options={availableAreas} 
-                  value={formData.area} 
-                  disabled={!formData.district}
-                  onChange={(val) => setFormData({ ...formData, area: val })} 
-                />
-              </div>
-            </div>
-
-            <div className="mt-10 pt-6 border-t border-slate-100 flex items-center justify-between">
-              <p className="text-[10px] text-slate-400 font-bold uppercase">* Mandatory fields</p>
-              <div className="flex gap-3">
-                <button 
-                  onClick={() => setShowAddForm(false)} 
-                  className="px-6 py-2.5 text-slate-500 font-bold hover:bg-slate-100 rounded-xl transition-colors text-sm"
-                >
-                  Cancel
-                </button>
-                <button 
-                  onClick={handleUpdateClick}
-                  disabled={isSaving}
-                  className="flex items-center gap-2 px-8 py-2.5 bg-brand-dark text-white font-black rounded-xl shadow-lg hover:shadow-slate-900/20 disabled:opacity-70 transition-all active:scale-95 text-sm"
-                >
-                  {isSaving && <Loader2 size={16} className="animate-spin" />}
-                  {isSaving ? 'Updating...' : 'Save Hub Address'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Existing Addresses */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {[1, 2].map((i) => (
-            <div key={i} className={`bg-white p-6 rounded-2xl border transition-all group ${i === 1 ? 'border-brand-orange ring-1 ring-brand-orange/10' : 'border-slate-200 hover:border-brand-dark/20'}`}>
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex items-center gap-3">
-                  <div className={`p-2.5 rounded-xl transition-colors ${i === 1 ? 'bg-brand-orange text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-brand-dark group-hover:text-white'}`}>
-                    <Store size={20} />
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Store Name *</label>
+                    <input 
+                      type="text" 
+                      value={formData.storeName}
+                      onChange={(e) => setFormData({...formData, storeName: e.target.value})}
+                      className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold text-sm focus:ring-4 focus:ring-brand-orange/5 focus:border-brand-orange outline-none transition-all" 
+                      placeholder="e.g. Uttara Branch" 
+                    />
                   </div>
-                  <div>
-                    <h4 className="font-bold text-brand-dark leading-tight">{i === 1 ? 'Main Warehouse' : 'Sub Hub DH-1'}</h4>
-                    <div className="flex gap-2 mt-1.5">
-                      {i === 1 && (
-                        <span className="text-[9px] uppercase tracking-wider font-black bg-brand-orange/10 text-brand-orange px-2 py-0.5 rounded-md border border-brand-orange/20">Default Pickup</span>
-                      )}
-                      <span className="text-[9px] uppercase tracking-wider font-black bg-brand-dark/10 text-brand-dark px-2 py-0.5 rounded-md border border-brand-dark/20">Default Return</span>
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Phone Number *</label>
+                    <input 
+                      type="tel" 
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold text-sm focus:ring-4 focus:ring-brand-orange/5 focus:border-brand-orange outline-none transition-all" 
+                      placeholder="01XXX-XXXXXX" 
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Detailed Address *</label>
+                  <textarea 
+                    value={formData.address}
+                    onChange={(e) => setFormData({...formData, address: e.target.value})}
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl h-20 text-slate-900 font-bold text-sm focus:ring-4 focus:ring-brand-orange/5 focus:border-brand-orange outline-none transition-all resize-none" 
+                    placeholder="House, Road, Block, Area description..."
+                  ></textarea>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <SearchableDropdown 
+                    label="Division *" 
+                    placeholder="Search..." 
+                    options={DIVISIONS} 
+                    value={formData.division} 
+                    onChange={(val) => setFormData({ ...formData, division: val, district: '', area: '' })} 
+                  />
+                  
+                  <SearchableDropdown 
+                    label="District *" 
+                    placeholder="Search..." 
+                    options={availableDistricts} 
+                    value={formData.district} 
+                    disabled={!formData.division}
+                    onChange={(val) => setFormData({ ...formData, district: val, area: '' })} 
+                  />
+                  
+                  <SearchableDropdown 
+                    label="Area *" 
+                    placeholder="Search..." 
+                    options={availableAreas} 
+                    value={formData.area} 
+                    disabled={!formData.district}
+                    onChange={(val) => setFormData({ ...formData, area: val })} 
+                  />
+                </div>
+              </div>
+
+              <div className="mt-10 pt-6 border-t border-slate-100 flex items-center justify-between">
+                <p className="text-[10px] text-slate-400 font-bold uppercase">* Mandatory fields</p>
+                <div className="flex gap-3">
+                  <button 
+                    onClick={() => setShowAddForm(false)} 
+                    className="px-6 py-2.5 text-slate-500 font-bold hover:bg-slate-100 rounded-xl transition-colors text-sm"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={handleUpdateClick}
+                    disabled={isSaving}
+                    className="flex items-center gap-2 px-8 py-2.5 bg-brand-dark text-white font-black rounded-xl shadow-lg hover:shadow-slate-900/20 disabled:opacity-70 transition-all active:scale-95 text-sm"
+                  >
+                    {isSaving && <Loader2 size={16} className="animate-spin" />}
+                    {isSaving ? 'Updating...' : 'Save Hub Address'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Existing Addresses - Changed to Flex Column to stack cards vertically */}
+          <div className="flex flex-col gap-5">
+            {[1, 2].map((i) => (
+              <div key={i} className={`bg-white p-6 rounded-2xl border transition-all group ${i === 1 ? 'border-brand-orange ring-1 ring-brand-orange/10 shadow-sm' : 'border-slate-200 hover:border-brand-dark/20'}`}>
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2.5 rounded-xl transition-colors ${i === 1 ? 'bg-brand-orange text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-brand-dark group-hover:text-white'}`}>
+                      <Store size={20} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-brand-dark leading-tight">{i === 1 ? 'Main Warehouse' : 'Sub Hub DH-1'}</h4>
+                      <div className="flex gap-2 mt-1.5">
+                        {i === 1 && (
+                          <span className="text-[9px] uppercase tracking-wider font-black bg-brand-orange/10 text-brand-orange px-2 py-0.5 rounded-md border border-brand-orange/20">Default Pickup</span>
+                        )}
+                        <span className="text-[9px] uppercase tracking-wider font-black bg-brand-dark/10 text-brand-dark px-2 py-0.5 rounded-md border border-brand-dark/20">Default Return</span>
+                      </div>
                     </div>
                   </div>
+                  <button className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400">
+                    <MoreVertical size={16} />
+                  </button>
                 </div>
-                <button className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400">
-                  <MoreVertical size={16} />
-                </button>
+                
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex items-center gap-3 text-slate-600">
+                    <div className="w-5 flex justify-center"><Phone size={14} className="text-slate-400" /></div>
+                    <span className="text-slate-900 font-bold">+880 1622-334455</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-slate-600">
+                    <div className="w-5 flex justify-center mt-0.5"><MapPin size={14} className="text-slate-400" /></div>
+                    <span className="text-slate-900 font-medium leading-relaxed">H-45, R-12, Sector 07, Uttara, Dhaka-1230</span>
+                  </div>
+                </div>
+                
+                {i !== 1 && (
+                  <button 
+                    onClick={() => { setShowOTP(true); }}
+                    className="w-full mt-5 py-2.5 bg-slate-50 text-slate-600 text-[10px] font-black rounded-xl hover:bg-brand-orange/5 hover:text-brand-orange border border-transparent hover:border-brand-orange/20 transition-all uppercase tracking-widest"
+                  >
+                    Set as Default Pickup
+                  </button>
+                )}
               </div>
-              
-              <div className="space-y-2.5 text-sm">
-                <div className="flex items-center gap-3 text-slate-600">
-                  <div className="w-5 flex justify-center"><Phone size={14} className="text-slate-400" /></div>
-                  <span className="text-slate-900 font-bold">+880 1622-334455</span>
-                </div>
-                <div className="flex items-start gap-3 text-slate-600">
-                  <div className="w-5 flex justify-center mt-0.5"><MapPin size={14} className="text-slate-400" /></div>
-                  <span className="text-slate-900 font-medium leading-relaxed">H-45, R-12, Sector 07, Uttara, Dhaka-1230</span>
-                </div>
-              </div>
-              
-              {i !== 1 && (
-                <button 
-                  onClick={() => { setShowOTP(true); }}
-                  className="w-full mt-5 py-2.5 bg-slate-50 text-slate-600 text-[10px] font-black rounded-xl hover:bg-brand-orange/5 hover:text-brand-orange border border-transparent hover:border-brand-orange/20 transition-all uppercase tracking-widest"
-                >
-                  Set as Default Pickup
-                </button>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 

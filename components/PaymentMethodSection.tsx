@@ -30,12 +30,16 @@ export const PaymentMethodSection: React.FC = () => {
 
   return (
     <>
-      <div className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest">Payouts</h3>
+      <div className="bg-white rounded-[24px] border border-slate-100 shadow-sm overflow-hidden">
+        {/* Header styled like Bank Details */}
+        <div className="p-5 border-b border-slate-50 bg-slate-50/50 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-[#1a3762] flex items-center gap-2">
+            <CreditCard size={18} className="text-brand-orange" />
+            Payouts
+          </h2>
         </div>
 
-        <div className="bg-white rounded-[24px] border border-slate-100 shadow-sm p-5 space-y-6">
+        <div className="p-5 space-y-6">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange">
               <CreditCard size={24} />

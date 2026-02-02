@@ -23,12 +23,16 @@ export const OwnerInfoSection: React.FC = () => {
 
   return (
     <>
-      <div className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest">Account</h3>
+      <div className="bg-white rounded-[24px] border border-slate-100 shadow-sm overflow-hidden">
+        {/* Header styled like Bank Details */}
+        <div className="p-5 border-b border-slate-50 bg-slate-50/50 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-[#1a3762] flex items-center gap-2">
+            <User size={18} className="text-brand-orange" />
+            Account
+          </h2>
         </div>
 
-        <div className="bg-white rounded-[24px] border border-slate-100 shadow-sm p-5 space-y-8">
+        <div className="p-5 space-y-8">
           {/* Profile Row */}
           <div className="flex items-center gap-4">
              <div className="relative group shrink-0">
